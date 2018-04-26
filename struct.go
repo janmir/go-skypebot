@@ -8,6 +8,48 @@ type AuthToken struct {
 	AccessToken  string `json:"access_token"`
 }
 
+//RequestMessage is for request
+type RequestMessage struct {
+	Type           string        `json:"type,omitempty"`
+	Action         string        `json:"action,omitempty"`
+	ID             string        `json:"id,omitempty"`
+	ChannelID      string        `json:"channelId,omitempty"`
+	Text           string        `json:"text,omitempty"`
+	Locale         string        `json:"locale,omitempty"`
+	TextFormat     string        `json:"textFormat,omitempty"`
+	Timestamp      string        `json:"timestamp,omitempty"`
+	LocalTimestamp string        `json:"localTimestamp,omitempty"`
+	From           _From         `json:"from,omitempty"`
+	Recipient      _Recipient    `json:"recipient,omitempty"`
+	Conversation   _Conversation `json:"conversation,omitempty"`
+	MembersAdded   []struct {
+		ID   string `json:"id,omitempty"`
+		Name string `json:"name,omitempty"`
+	} `json:"membersAdded,omitempty"`
+	MembersRemoved []struct {
+		ID   string `json:"id,omitempty"`
+		Name string `json:"name,omitempty"`
+	} `json:"membersRemoved,omitempty"`
+	ChannelData struct {
+		ClientActivityID string `json:"clientActivityId,omitempty"`
+		Text             string `json:"text,omitempty"`
+	} `json:"channelData,omitempty"`
+	Entities []struct {
+		Type              string `json:"type,omitempty"`
+		RequiresBotState  bool   `json:"requiresBotState,omitempty"`
+		SupportsTts       bool   `json:"supportsTts,omitempty"`
+		SupportsListening bool   `json:"supportsListening,omitempty"`
+		Text              string `json:"text,omitempty,omitempty"`
+		Locale            string `json:"locale,omitempty,omitempty"`
+		Country           string `json:"country,omitempty,omitempty"`
+		Platform          string `json:"platform,omitempty,omitempty"`
+		Mentioned         struct {
+			ID string `json:"id,omitempty"`
+		} `json:"mentioned,omitempty"`
+	} `json:"entities,omitempty"`
+	ServiceURL string `json:"serviceUrl,omitempty"`
+}
+
 //ResponseMessage is for response
 type ResponseMessage struct {
 	Type         string         `json:"type"`
@@ -21,7 +63,7 @@ type ResponseMessage struct {
 	InputHint    string         `json:"inputHint"`
 	Attachments  []_Attachments `json:"attachments"`
 	//custom
-	Sleep int8
+	Sleep int
 }
 
 type _From struct {

@@ -4,5 +4,7 @@
 
 # Feature-list/Todo
 - [ ] Authentication handling, request and auto-renewals.
+- [x] Cache for tokens and common urls
 - [ ] Message template creation, not all message/rich message types are supported.
+- [x] Bot Manager, managing multiple bot instances to support concurrency.
 - [ ] I'll think for more.

@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	clientID     = "*****"
-	clientSecret = "*****"
+	clientID     = "******"
+	clientSecret = "******"
 )
 
 var (
@@ -14,6 +14,8 @@ var (
 )
 
 func TestMain(t *testing.T) {
-	bot.MakeMessage("", 0).
+	bot.Set("").
+		ShowTyping(0).
+		MakeMessage("", 0).
 		Send()
 }
