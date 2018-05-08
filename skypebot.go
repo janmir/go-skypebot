@@ -335,9 +335,8 @@ func catchHTTPError(resp gorequest.Response, errs []error, callback func(int)) b
 		if callback != nil {
 			callback(resp.StatusCode)
 			return false
-		} else {
-			logger(_Error, errors.New("http error status "+resp.Status))
 		}
+		logger(_Error, errors.New("http error status "+resp.Status))
 	}
 
 	return true
