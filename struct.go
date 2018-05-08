@@ -1,5 +1,14 @@
 package skypebot
 
+//Card defines a tructure for card view
+type Card struct {
+	Title    string
+	Subtitle string
+	Message  string
+	SRC      string
+	URL      string
+}
+
 //AuthToken token received from bot framework
 type AuthToken struct {
 	TokenType    string `json:"token_type"`

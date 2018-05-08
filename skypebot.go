@@ -200,6 +200,75 @@ func (obj *Bot) Set(req interface{}) *Bot {
 	return obj
 }
 
+//MakeCard sends a message of type list to skype as a response
+//A card contains a message, submessage and the
+//attachment itself
+//attachments can have an image, or url to open
+func (obj *Bot) MakeCard(cards []Card, pause int) *Bot {
+	request := obj.request
+
+	//Attachments
+	attachments := make([]_Attachments, 0)
+
+	//loop thru card
+	for _, oneCard := range cards {
+		_ = oneCard
+
+		att := _Attachments{
+			ContentType: "application/vnd.microsoft.card.thumbnail",
+			Content: _Content{
+				Title:    oneCard.Title,
+				Subtitle: oneCard.Subtitle,
+				Text:     oneCard.Message,
+				//if oneCard.URL is not empty
+				Tap: _Tap{
+					Type:  "openUrl",
+					Value: oneCard.URL,
+					Title: "Click to Download",
+				},
+				//If not nil oneCard.SRC
+				Images: []_Images{
+					{
+						URL: oneCard.SRC,
+						Alt: "...",
+					},
+				},
+			},
+		}
+
+		attachments = append(attachments, att)
+	}
+
+	//Insert new message to cache
+	//Contains attachments for images and messages
+	response := ResponseMessage{
+		Type:       "message",
+		Locale:     "en-US",
+		TextFormat: "xml",
+		ReplyToID:  request.ID,
+		InputHint:  "ignoringInput",
+		From: _From{
+			ID:   request.Recipient.ID,
+			Name: request.Recipient.Name,
+		},
+		Conversation: _Conversation{
+			ID:   request.Conversation.ID,
+			Name: request.Conversation.Name,
+		},
+		Recipient: _Recipient{
+			ID:   request.From.ID,
+			Name: request.From.Name,
+		},
+		Attachments: attachments,
+		Sleep:       pause,
+	}
+
+	//Append
+	obj.messageCache = append(obj.messageCache, response)
+
+	return obj
+}
+
 //MakeMessage sends a message to skype as a response
 func (obj *Bot) MakeMessage(message string, pause int) *Bot {
 	request := obj.request
@@ -224,6 +293,7 @@ func (obj *Bot) MakeMessage(message string, pause int) *Bot {
 		TextFormat: "markdown", //plain", //"xml",
 		ReplyToID:  request.ID,
 		InputHint:  "ignoringInput",
+		Sleep:      pause,
 	}
 
 	//Append
